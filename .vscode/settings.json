@@ -1,6 +1,6 @@
 {
-  "cSpell.enableFiletypes": [
-    "!javascriptreact",
-    "javascript"
-  ]
+  "files.associations": {
+    "*.js": "javascript"
+
+  }
 }
