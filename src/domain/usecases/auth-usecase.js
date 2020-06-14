@@ -5,11 +5,13 @@ const {
 module.exports = class AuthUseCase {
   constructor ({
     loadUserByEmailRepository,
+    updateAccessTokenRepository,
     encrypter,
     tokenGenerator
   } = {}) {
     this.loadUserByEmailRepository = loadUserByEmailRepository
     this.encrypter = encrypter
+    this.updateAccessTokenRepository = updateAccessTokenRepository
     this.tokenGenerator = tokenGenerator
   }
 
@@ -25,6 +27,7 @@ module.exports = class AuthUseCase {
     const isValid = user && await this.encrypter.compare(password, user.password)
     if (isValid) {
       const accessToken = await this.tokenGenerator.generate(user.id)
+      await this.updateAccessTokenRepository.update(user.id, accessToken)
       return accessToken
     }
 
